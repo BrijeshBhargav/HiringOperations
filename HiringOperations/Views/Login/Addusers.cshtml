@@ -1,0 +1,230 @@
+﻿@using HiringOperations.Models;
+@model AdminModel
+@{
+    ViewData["Title"] = "Addstudents";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<html>
+<head>
+    <link href="Styles/JobStyle.css" type="text/css" rel="Stylesheet" />
+    <link href="Styles/gridstyles.css" rel="Stylesheet" type="text/css" />
+    <link href="Styles/Calendar.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="ndate/datetimepicker_css.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="Revamp/start/vendor/bootstrap/css/bootstrap.min.css" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="Revamp/start/fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="Revamp/start/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="Revamp/start/css/util.css" />
+    <link rel="stylesheet" type="text/css" href="Revamp/start/css/main.css" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <style>
+        .alert {
+            background-position: 2% 7px;
+            background-repeat: no-repeat;
+            background-size: auto 35px;
+            background-color: rgba(0, 0, 0, 0);
+            border: 0;
+            min-width: auto !important;
+            text-align: left;
+            padding-left: 68px;
+        }
+
+            .alert.alert-danger {
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAARVBMVEX////7y0P7y0P7y0P7y0P7y0P7y0P7y0P7y0P7y0P7y0P7y0P7y0P7y0P7y0NAQECdhUHYsUKGdEG1l0JLSEBuYkHkukPKU8NPAAAADnRSTlMA4EDAoCAQ8IBgkDDQUFItelQAAAC0SURBVHherZBLDsMwCAVD7Nj5gvPr/Y/a0FpGLTibdnbozQJN829agPZu7/CiuxE8C76+T/hiqgruLbjqh5ip/TljZrb3AQuDKYAIYO09L3TBRq/3EHk4shCDEkZkTqITmdGMLIIO7r8FbzfaiDappSNjIkpZcCqyCDo4WAJYkR8prTp4ADSBUCIX9uPY5epL5AJdyBWDRDYFHCWyCiXBObKwrh+nl4g2TiLVhSXW97g0v/MEHIQbCYeFmYAAAAAASUVORK5CYII=);
+                border-top: 1px solid rgba(140, 0, 0, 0.4);
+                border-bottom: 1px solid rgba(140, 0, 0, 0.4);
+            }
+
+            .alert.alert-info {
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAADBklEQVR42u3YyWsTURwHcP8aQUWtWlu7JEbtpngQvIqXevDWm1fXehO12BTErdQiVMFQ8ODBusWkmSa1lVrTxdrG0FA9WJtkljfL19/LTDKMibl0EorkwReSCQ8+fN+bl2G2AdhSqYH+P1CpAS0DfXUI+ufzUCfaoQptYMIxsMhRsE/d0L4/BNR0qcnug4y159CmTkOLdkKNdnBQAaNEjkAZ90EOH4YcOQ51dQQVBRnLN6DHuqDFOqGZGEpbaVDICynkAVvoRUVAxuqQE8PjXC7C/AX64KG0gq3ch6sgQ1zkEBtTph2FY8JeApkYKdgCMdgMPTMP10D64kUOsTDtDsw/27FAIge9b4Y8e8EdELS0jTAh5TF2Ow5Q9l0TDDWNTYOMjSkLQREcEAdGCRfvHdFcLgI1EegQtPXY5kFactAE2JDyGHvvONrhILZ81w3QIxNQCEfw2JvYxpRYKrMdSqNLoNSzPMBGTJwEmz4HuSSGMnkWYrgjv1Rm3jZATQ5vHqT//sgRVhtmI8p0NwADbOF6EUaOX4GiZCHGzhAkD2ogUD20XxNw5baXhRN2G2EvR+QwhqFDme91YJgiQfpyCTamkTAHaQm97p1DauIBR1jxWI14CHMNuqZCmbsKmcKYBLkYQzkA9m3APRA/P6TxrvztbCfYkoOoqgKVydTQ5ZIYMdgKQ91wD8SHvj7JAYXb2T5jmqEkhiEnHnNIESb7po72joCK/Ntray8sRD7UBkVeGoBEIQilwYFRUwFU9HmIrdzjCHtpKNJXP48FqSfIfspe2jf+Sj4P2UOMnOKQfCOE6Ye0eMdqZR+yr/fwc8icXA2QmnzCD7pCI+JiH8SFPt4KYXYjO7YTLDFYPZCensu3QakjzC2I8zcJsguZsR3IvNoOfWO2eiA+tJ9jfI9Q+qEkn1JGoCz1UW5D+/HSnFhNUCqVQjwezyUajSIUChW+02/VB42OjqJMaqCtB5qZmUEgEIDf73eEXxMEofogPtLpNHp6euDz+Xhyn+lauUm1tx81UMXzBw5wT9JYWi53AAAAAElFTkSuQmCC);
+                border-top: 1px solid rgba(255, 165, 0,0.4);
+                border-bottom: 1px solid rgba(255, 165, 0,0.4);
+                color: rgb(225, 75, 0);
+            }
+
+            .alert.alert-success {
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAqFBMVEX////w8PDw8PDw8PDw8PDw8PDw8PDw8PDW1tbn5+ff398PnVjd3d3i4uIPnVjk5OQPnVjg4OAPnVgzqW8PnVgPnVjT09Pw8PDG4NOp1sBjvJHu7u4PmVYqp2ri6+YcomFHsn4bmlzHzsoPnFeuxbl9tJk0n2t/xqSVvqqNzK1ZqYKJuaJVt4c4rHQnnWPl5eXj4+MPm1fe3t6b0bfc3NxBo3TY2NjX19eKj23kAAAAFXRSTlMA8BCwcFCgkP4f3NDnrzCHoM8Qc/Avz3otAAAA9klEQVR4Xq2T2XKDMAwAMRACNGdbyUDus/d9/f+f1VHEiFamfcm+7qIZGTs4IWEcGeswURz6dGIbJCrp0MeC6QTBCADO2Hetokv+vNXbyvnLAc9v8cA+NH4/veAFEr/f7HIe0OJvETMKYhLlLw8fiNinICKxnHHCfr92QY8CcwwAloX41cFjSoElCnBU89pvkeCAeAPH4or89Bp1YG+g5uUOPQEP5wWbgZzjPRDiU1mTmD/wggyvGVspZgCP4rGvjrpYuAWFTP+sounzwPO7n8SnNEBdmGesGZLUV+6V/ZilLt7F+6/95BMxHf71cCZfefbf0zsl3w3QOjVy6QFpAAAAAElFTkSuQmCC);
+                border-top: 1px solid limegreen;
+                border-bottom: 1px solid limegreen;
+            }</style>
+    <style type="text/css">
+        #calendarContainerOverride table {
+            width: 0px;
+            height: 0px;
+        }
+
+            #calendarContainerOverride table tr td {
+                padding: 0;
+                margin: 0;
+            }
+
+        #success_message {
+            display: none;
+        }
+
+        section.py-5 {
+            padding: 48px 0 !important;
+        }
+    </style>
+    <style>
+        .notice {
+            padding: 15px;
+            background-color:azure;
+            border-left: 6px solid #7f7f84;
+            margin-bottom: 10px;
+            -webkit-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+            -moz-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+            box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+        }
+
+        .notice-sm {
+            padding: 10px;
+            font-size: 80%;
+        }
+
+        .notice-lg {
+            padding: 35px;
+            font-size: large;
+        }
+
+        .notice-success {
+            border-color: #80D651;
+        }
+
+            .notice-success > strong {
+                color: #80D651;
+            }
+</style>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+
+</head>
+<body>
+    <section class="text-black">
+        <div class="container-fluid">
+            <div class="grid-container">
+                <div class="row">
+                    <div class="caption col-sm-5">
+                        <h6 class="page-title font-weight-bold"><img src="https://media-exp1.licdn.com/dms/image/C4E0BAQF9Itr1sz1b_Q/company-logo_200_200/0/1610193051399?e=1673481600&v=beta&t=khK9r2PMKSNdEmHr5qpI80P-U-lfn32AQfCl5Uyg1d8" height="30" width="25" />  Employee Information Report</h6>
+                    </div>
+                </div>
+                <hr />
+                <div id="formgrid" class="formgrid">
+                    @using (Html.BeginForm())
+                    {
+                        <div>
+                            <div class="row">
+                                <div class="caption col-sm-6">
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <strong>
+                                            <label class="col-sm-2 col-form-label"><b>First Name :</b> </label>
+                                        </strong>
+
+                                        @Html.TextBoxFor(model => model.FirstName, new { @class = "col-sm-3 inputGroupContainer", placeholder="Enter First-Name" })
+                                        @Html.ValidationMessageFor(model => model.FirstName,"", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"> <b>Last Name :</b></label>
+                                        @Html.TextBoxFor(model => model.LastName, new { @class = "col-sm-3 inputGroupContainer",placeholder="Enter Last-Name" })
+                                        @Html.ValidationMessageFor(model => model.LastName,"", new { @class = "text-danger" })
+                                    </div>
+                                 
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"> <b>Email Id :</b></label>
+                                        @Html.TextBoxFor(model => model.EmailID, new { @class = "col-sm-3 inputGroupContainer", placeholder="Enter Email Id" })
+                                        @Html.ValidationMessageFor(model => model.EmailID,"", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"> <b>Password :</b></label>
+                                        @Html.TextBoxFor(model => model.Password, new { @class = "col-sm-3 inputGroupContainer", placeholder="Enter password" })
+                                        @Html.ValidationMessageFor(model => model.Password,"", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"><b>Gender :</b> </label>
+                                        <div class="col-sm-3 inputGroupContainer">
+                                            <label><span class="text-danger"></span></label>
+                                            @Html.RadioButtonFor(model => model.Gender, "Male", new { id = "male-true"  })
+                                            @Html.Label("male-true", "Male")
+                                            @Html.RadioButtonFor(model => model.Gender, "Female", new { id = "female-true"})
+                                            @Html.Label("female-true", "Female")
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"> <b>DOB :</b></label>
+                                        @Html.EditorFor(model => model.Dob, new { @class = "col-sm-3 inputGroupContainer", placeholder="Enter Dob" })
+                                        @Html.ValidationMessageFor(model => model.Dob,"", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"> <b>Role :</b></label>
+                                        @Html.DropDownListFor(model => model.Role, new List<SelectListItem>
+                                    {
+                                    new SelectListItem { Text="--select--",Value="--select--"},
+                                    new SelectListItem { Text="CEO",Value="CEO"},
+                                    new SelectListItem { Text="Manager",Value="Manager"},
+                                    new SelectListItem { Text="Trainer",Value="Trainer"},
+                                    new SelectListItem { Text="Co Ordinator",Value="Co Ordinator"},
+                                    new SelectListItem { Text="Interviewer",Value="Interviewer"},
+                                    },
+                                    new
+                                    {
+                                    @class = "col-sm-3 inputGroupContainer"
+                                    })
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"> <b>Status :</b></label>
+                                        @Html.DropDownListFor(model => model.Status, new List<SelectListItem> {
+                                    new SelectListItem { Text="Active",Value="True"},
+                                    new SelectListItem { Text="InActive",Value="False"}
+                                    }, new { @class = "col-sm-3 inputGroupContainer" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">&nbsp;</label>
+                                    <div class="col-sm-5">
+                                        @*<button type="submit" class="btn-style2 mgn-top-btn">Submit</button> *@
+                                        <input type="submit" class="btn btn-primary float-end" value="Submit">
+                                        <a href="Addusers" class="btn btn-danger" >Cancel</a>
+                                    </div>
+                                </div>
+                                @if (ViewBag.Message != null)
+                                {
+                                   
+                                    @*<div class="notice notice-success">
+                                        <h3><strong>Sucess</strong></h3>@ViewBag.Message
+                                    </div>*@
+                                    <div class="alert alert-success">@ViewBag.Message</div>
+                        
+                                }
+                                
+                                </div>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End -->
+</body>
+</html>
+<!-- Content Start -->

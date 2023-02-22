@@ -1,0 +1,165 @@
+﻿@model IEnumerable<HiringOperations.Models.studentModel>
+@{
+    ViewData["Title"] = "TrainerHome";
+    Layout = "~/Views/Shared/_TrainerLayout.cshtml";
+}
+
+
+<html>
+<head>
+    <link href="Revamp/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="Revamp/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="Revamp/js/dataTables.bootstrap4.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+        jQuery(function ($) {
+            $('#fieldSetupGrid').DataTable({
+                "pageLength": 25
+            });
+        });
+    </script>
+	<style>
+
+		fieldset {
+			border: 1px solid #ddd !important;
+			margin: 10;
+			xmin-width: 0;
+			padding: 10px;
+			position: relative;
+			border-radius: 4px;
+			background-color:green ;
+			padding-left: 10px !important;
+		}
+
+		legend {
+			font-size: 14px;
+			font-weight: bold;
+			margin-bottom: 0px;
+			width: 35%;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			padding: 5px 5px 5px 10px;
+			background-color: aliceblue;
+		}
+		</style>
+</head>
+<body>
+    <!-- Content Start -->
+    <section class="text-black">
+        <div class="container-fluid">
+            <div class="grid-container">
+                <div class="row">
+                    <div class="caption col-sm-7">
+                        <h6 class="page-title">DEPARTMENT'S DATA</h6>
+                        <asp:Label ID="lbl_error" runat="server" Text="Label" Visible="False" ForeColor="Red"></asp:Label>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn btn-primary btn-style1-oval float-right" data-toggle="modal" data-target="#addFieldModal">+ Add Department</button>
+                    </div>
+                </div>
+                <hr />
+                <div id="formgrid" class="formgrid">
+
+                    <table class="table table-bordered table-striped dtables" style="width: 100%" id="fieldSetupGrid">
+                        <thead>
+                            <tr>
+                               @* <th style="width: 20px; text-align: center">S.No</th>*@
+                                <th>
+                                    <span style="font-size: 15px">Name</span>
+                                </th>
+                                 <th>
+                                    <span style="font-size: 15px">Emailid</span>
+                                </th>
+                                <th>
+                                    <span style="font-size: 15px">Mobile</span>
+                                </th>
+                                 <th>
+                                    <span style="font-size: 15px">Adhar</span>
+                                </th>
+                                 <th>
+                                    <span style="font-size: 15px">SchoolName</span>
+                                </th>
+                                <th >
+                                    <span style="font-size: 15px">Action</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model) {
+                        <tr>
+                           
+                            
+                            <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                    @Html.DisplayFor(modelItem => item.Emailid)
+                            </td>
+                            <td>
+                                    @Html.DisplayFor(modelItem => item.Mobile)
+                            </td>
+                            <td>
+                                    @Html.DisplayFor(modelItem => item.Aadhar)
+                            </td>
+                            <td>
+                                 @Html.DisplayFor(modelItem => item.SchoolName)
+                            </td>
+                                <td>
+                                   @* <a asp-action="Edit" asp-route-Hallticket="@item.Hallticket"><i class="text-sucess"><i class="fa fa-edit fa-lg btn-lg ;"></i></a>*@
+                                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                </td>
+
+                        </tr>
+                        }
+                    </table>
+
+                </div>
+                <br />
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="addFieldModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add New Department</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+
+
+                            <div class="modal-body">
+
+
+                                <div class="form-group">
+                                </div>
+                                <div class="form-group">
+                                </div>
+                                <div class="form-group">
+                                </div>
+                                <div class="form-group">
+                                </div>
+                                <div class="form-group">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+	
+</body>
+</html>
+
+

@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<html>
+<head>
+    <link href="Styles/JobStyle.css" type="text/css" rel="Stylesheet" />
+    <link href="Styles/gridstyles.css" rel="Stylesheet" type="text/css" />
+    <link href="Styles/Calendar.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="ndate/datetimepicker_css.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <style type="text/css">
+        #calendarContainerOverride table {
+            width: 0px;
+            height: 0px;
+        }
+
+            #calendarContainerOverride table tr td {
+                padding: 0;
+                margin: 0;
+            }
+
+        #success_message {
+            display: none;
+        }
+
+        section.py-5 {
+            padding: 48px 0 !important;
+        }
+    </style>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <section class="text-black">
+        <div class="container-fluid">
+            <div class="grid-container">
+                <div class="row">
+                    <div class="caption col-sm-5">
+                        <h6 class="page-title font-weight-bold"><img src="https://media-exp1.licdn.com/dms/image/C4E0BAQF9Itr1sz1b_Q/company-logo_200_200/0/1610193051399?e=1673481600&v=beta&t=khK9r2PMKSNdEmHr5qpI80P-U-lfn32AQfCl5Uyg1d8" height="30" width="25" />  Employee Information Report</h6>
+                    
+                    
+                    </div>
+                </div>
+                <form enctype="multipart/form-data" method="post" asp-controller="Bulk" asp-action="Index">
+                    <dl>
+                        <dt>
+                            <label>Upload ExcelFile:</label>
+                        </dt>
+                        <dd>
+                            <input type="file" name="postedFile" id="IFormFile">
+
+                        </dd>
+                    </dl>
+                    <input class="btn btn-primary" type="submit" value="Upload" />
+                </form>
+                <br />
+                <div class="">
+                    <!--Show Message if file is uploaded or not-->
+                    @ViewBag.Message
+                </div>
+
+                <hr />
+        </div>
+             </div>
+                
+</section>
+</body>

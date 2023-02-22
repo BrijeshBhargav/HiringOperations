@@ -1,0 +1,172 @@
+﻿@model IEnumerable<HiringOperations.Models.studentModel>
+@{
+    ViewData["Title"] = "Model";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    @* <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>*@
+   @* @<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>@*@
+</head>
+<body>
+    <!-- Content Start -->
+    <section class="text-black">
+        <div class="container-fluid">
+            <div class="grid-container">
+                <div class="row">
+                    <div class="caption col-sm-7">
+                        <h6 class="page-title">DEPARTMENT'S DATA</h6>
+                        <asp:Label ID="lbl_error" runat="server" Text="Label" Visible="False" ForeColor="Red"></asp:Label>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn btn-primary btn-style1-oval float-right" data-toggle="modal" data-target="#addFieldModal">+ Add Department</button>
+                    </div>
+                </div>
+                <hr />
+                <div id="formgrid" class="formgrid">
+                    <table class="table table-bordered table-striped dtables" style="width: 100%" id="testtable">
+
+ 
+
+                        <tr>
+                            <th style="width: 20px; text-align: center">Hall Ticket No</th>
+                            <th>
+                                <span style="font-size: 15px">Student Name</span>
+                            </th>
+                            <th>
+                                <span style="font-size: 15px">Email ID</span>
+                            </th>
+                            <th>
+                                <span style="font-size: 15px">Phone No</span>
+                            </th>
+                            <th>
+                                <span style="font-size: 15px">College Name</span>
+                            </th>
+                            <th>
+                                <span style="font-size: 15px">Backlogs</span>
+                            </th>
+                            <th>
+                                <span style="font-size: 15px">Year Of Passout</span>
+                            </th>
+                            <th>
+                                <span style="font-size: 15px">Status</span>
+                            </th>
+                            <th>
+                                <span style="font-size: 15px">Action</span>
+                            </th>
+                        </tr>
+
+ 
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="text-align: center">@item.Hallticket</td>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>@item.Emailid</td>
+                                <td>@item.Mobile</td>
+                                <td>@item.EngcollegeName</td>
+                                <td>@item.Totalbacklogs</td>
+                                <td>@item.YOP</td>
+                                <td><center><p style="color:red"> @item.Status</p></center></td>
+                                <td>
+                                    <!-- Modal -->
+                                    @using (Html.BeginForm("Model", "Login", FormMethod.Post))
+                                    {
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Student Remarks</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label"><b>Hallticket</b></label>
+                                                            <div class="col-sm-4 inputGroupContainer">
+                                                                <div class="input-group" >
+                                                                    <input type="text" id="texens" name="user" value="texens"/>
+                                                                    @Html.TextBox("Hallticket")
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label"><b>Remarks</b></label>
+                                                            <div class="col-sm-4 inputGroupContainer">
+                                                                <div class="input-group" >
+                                                                    @* <input type="text" id="txtName" name="searchparam" placeholder="Enter Remarks" />*@
+                                                                    @Html.TextArea("Remarks")
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label"><b>Score</b></label>
+                                                            <div class="col-sm-4 inputGroupContainer">
+                                                                <div class="input-group">
+                                                                    @Html.TextBox("Score")
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @*<div class="form-group row">
+                                                <label class="col-sm-2 col-form-label"><b>Date</b></label>
+                                                <div class="col-sm-6 inputGroupContainer">
+                                                <div class="input-group">
+                                                <input type="date" id="date" name="searchparam" />
+                                                </div>
+                                                </div>
+                                                </div>*@
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <input type="submit" class="btn btn-primary float-end" value="Submit">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <center>
+                                        <div  data-toggle="modal" data-target="#exampleModal">
+                                            <a href="#" class="editbtn btn btn-primary btn-sm" data-id="@item.Hallticket" data-toggle="modal" data-target="#updateFieldModal">L1 Approval</a>
+                                        </div>
+
+                                    </center>
+
+ 
+
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <br />
+            </div>
+        </div>
+    </section>
+    <!-- End -->
+    <script type="text/javascript" src="Revamp/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="Revamp/js/dataTables.bootstrap4.min.js"></script>
+   
+
+ 
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+                $("#testtable").on("click", ".editbtn", function() {
+                    var currentid = $(this).closest("tr").find("td").eq(0).text();
+                    $("input:text#texens").val(currentid); 
+            });
+        });
+    </script>
+</body>
+</html>

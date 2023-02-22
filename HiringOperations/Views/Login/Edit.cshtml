@@ -1,0 +1,149 @@
+﻿@using HiringOperations.Models;
+@model AdminModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<html>
+<head>
+    <link href="Styles/JobStyle.css" type="text/css" rel="Stylesheet" />
+    <link href="Styles/gridstyles.css" rel="Stylesheet" type="text/css" />
+    <link href="Styles/Calendar.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="ndate/datetimepicker_css.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <style type="text/css">
+        #calendarContainerOverride table {
+            width: 0px;
+            height: 0px;
+        }
+
+            #calendarContainerOverride table tr td {
+                padding: 0;
+                margin: 0;
+            }
+
+        #success_message {
+            display: none;
+        }
+
+        section.py-5 {
+            padding: 48px 0 !important;
+        }
+    </style>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+
+</head>
+<body>
+    <section class="text-black">
+        <div class="container-fluid">
+            <div class="grid-container">
+                <div class="row">
+                    <div class="caption col-sm-5">
+                        <h6 class="page-title font-weight-bold"><img src="https://media-exp1.licdn.com/dms/image/C4E0BAQF9Itr1sz1b_Q/company-logo_200_200/0/1610193051399?e=1673481600&v=beta&t=khK9r2PMKSNdEmHr5qpI80P-U-lfn32AQfCl5Uyg1d8" height="30" width="25" />  Employee Information Report</h6>
+                    </div>
+                </div>
+                <hr />
+                <div id="formgrid" class="formgrid">
+                    @using (Html.BeginForm())
+                    {
+                        <div>
+                            <div class="row">
+                                <div class="caption col-sm-6">
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        @Html.HiddenFor(model=> model.USERID)
+                                        <strong>
+                                            <label class="col-sm-2 col-form-label"><b>First Name :</b> </label>
+                                        </strong>
+
+                                        @Html.TextBoxFor(model => model.FirstName, new { @class = "col-sm-3 inputGroupContainer", placeholder="Enter First-Name" })
+                                        @Html.ValidationMessageFor(model => model.FirstName,"", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"> <b>Last Name :</b></label>
+                                        @Html.TextBoxFor(model => model.LastName, new { @class = "col-sm-3 inputGroupContainer", placeholder="Enter Last-Name" })
+                                        @Html.ValidationMessageFor(model => model.LastName,"", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"> <b>Email Id :</b></label>
+                                        @Html.TextBoxFor(model => model.EmailID, new { @class = "col-sm-3 inputGroupContainer", placeholder="Enter Email Id" })
+                                        @Html.ValidationMessageFor(model => model.EmailID,"", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"> <b>Password :</b></label>
+                                        @Html.TextBoxFor(model => model.Password, new { @class = "col-sm-3 inputGroupContainer", placeholder="Enter password" })
+                                        @Html.ValidationMessageFor(model => model.Password,"", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"><b>Gender :</b> </label>
+                                        <div class="col-sm-3 inputGroupContainer">
+                                            <label><span class="text-danger"></span></label>
+                                            @Html.RadioButtonFor(model => model.Gender, "Male", new { id = "male-true"  })
+                                            @Html.Label("male-true", "Male")
+                                            @Html.RadioButtonFor(model => model.Gender, "Female", new { id = "female-true"})
+                                            @Html.Label("female-true", "Female")
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"> <b>DOB :</b></label>
+                                        @Html.EditorFor(model => model.Dob, new { @class = "col-sm-3 inputGroupContainer", placeholder="Enter Dob" })
+                                        @Html.ValidationMessageFor(model => model.Dob,"", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"> <b>Role :</b></label>
+                                        @Html.DropDownListFor(model => model.Role, new List<SelectListItem>
+                                    {
+                                    new SelectListItem { Text="--select--",Value="--select--"},
+                                    new SelectListItem { Text="CEO",Value="CEO"},
+                                    new SelectListItem { Text="Manager",Value="Manager"},
+                                    new SelectListItem { Text="Trainer",Value="Trainer"},
+                                    new SelectListItem { Text="Co Ordinator",Value="Co Ordinator"},
+                                    new SelectListItem { Text="Interviewer",Value="Interviewer"},
+                                    },
+                                    new
+                                    {
+                                    @class = "col-sm-3 inputGroupContainer"
+                                    })
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.AntiForgeryToken()
+                                        <label class="col-sm-2 col-form-label"> <b>Status :</b></label>
+                                        @Html.DropDownListFor(model => model.Status, new List<SelectListItem> {
+                                    new SelectListItem { Text="Active",Value="True"},
+                                    new SelectListItem { Text="InActive",Value="False"}
+                                    }, new { @class = "col-sm-3 inputGroupContainer" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">&nbsp;</label>
+                                    <div class="col-sm-5">
+                                        @*<button type="submit" class="btn-style2 mgn-top-btn">Submit</button> *@
+                                        <input type="submit" value="save" class="btn btn-info" />
+                                        <a href="Addusers" class="btn btn-danger" style="color:black;background-color:red">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End -->
+</body>
+</html>
+<!-- Content Start -->

@@ -1,0 +1,259 @@
+﻿@model IEnumerable<HiringOperations.Models.studentModel>
+@{
+    ViewData["Title"] = "Onboarding";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    @* <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>*@
+    @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>*@
+
+    <script type="text/javascript">
+        $(function () {
+            $("body").on('click', '#btnEdit', function () {
+                $("#exampleModal").modal("hide");
+                var obj = {};
+                obj.Id = $(this).attr('data-id');
+
+                $.ajax({
+                    url: 'Home/EditCustomer',
+                    data: JSON.stringify(obj),
+                    type: 'POST',
+                    dataType: 'html',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+                        var Hallticket = JSON.parse(response).Hallticket;
+
+                        $('#txtHallticket').val(Hallticket);
+
+                        $("#exampleModal").modal("show");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Content Start -->
+    <section class="text-black">
+        <div class="container-fluid">
+            <div class="grid-container">
+                <div class="row">
+                    <div class="caption col-sm-7">
+                        <h5 class="page-title"><b>STUDENT'S DATA</b></h5>
+                        @* //search
+                        <div class="form-outline">
+                        <i class="fa fa-search"></i>
+                        <input type="search" id="myInput" class="form" placeholder="Search Here...">
+                        <span class="right-pan color:blue;"><i></i></span>
+                        </div>*@
+
+
+                        <asp:Label ID="lbl_error" runat="server" Text="Label" Visible="False" ForeColor="Red"></asp:Label>
+                    </div>
+                    @*<div class="col-md-5">
+                    <button type="button" class="btn btn-primary btn-style1-oval float-right" data-toggle="modal" data-target="#addFieldModal">+ Add Department</button>
+                    </div>*@
+                    <div>
+                        <a asp-action="Addstudents" class="btn btn-sm btn-dark btn-style1-oval float-right">
+                            <i class="fa fa-plus"></i> <b>ADD Students</b>
+                        </a>
+                    </div>
+                </div>
+                <hr />
+                <div id="formgrid" class="formgrid">
+                    <table class="table table-bordered table-striped dtables" style="width: 100%" id="fieldSetupGrid">
+                        <thead>
+                        <thead>
+                            <tr>
+                                    @* <th style="width: 20px; text-align: center">S.No</th>*@
+                                <th>
+                                    <span style="font-size: 15px">HallTicket No</span>
+                                </th>
+
+                                <th>
+                                    <span style="font-size: 15px">Name</span>
+                                </th>
+
+                                <th>
+                                    <span style="font-size: 15px">Emailid</span>
+                                </th>
+                                <th>
+                                    <span style="font-size: 15px">Mobile</span>
+                                </th>
+                                <th>
+                                    <span style="font-size: 15px">College Name</span>
+                                </th>
+
+                                <th>
+                                    <span style="font-size: 15px">Total Backlogs</span>
+                                </th>
+                                <th>
+                                    <span style="font-size: 15px">Yop</span>
+                                </th>
+                                <th>
+                                    <span style="font-size: 15px">status</span>
+                                </th>
+                                <th>
+                                    <span style="font-size: 15px">Action</span>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTable">
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                        @*<td style="text-align: center"></td>*@
+                                    <td><center>@item.Hallticket</center></td>
+                                    <td><center>@item.Name</center></td>
+                                    <td><center>@item.Emailid</center></td>
+                                    <td><center>@item.Mobile</center></td>
+                                    <td><center>@item.EngcollegeName</center></td>
+                                    <td><center>@item.Totalbacklogs</center></td>
+                                    <td><center>@item.YOP</center></td>
+                                    <td><center><p style="color:red">@item.Status</p></center></td>
+                                    <td>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="updateFieldModal
+                                    " tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Update Department</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                        </div>
+                                                        <div class="form-group">
+                                                        </div>
+                                                        <div class="form-group">
+                                                        </div>
+                                                        <div class="form-group">
+                                                        </div>
+                                                        <div class="form-group">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <center>
+                                            <div data-toggle="modal" data-target="#exampleModal">
+                                                <a href="#" class="editbtn btn btn-dark btn-sm btn-style1-oval" data-id="@item.Hallticket" data-toggle="modal" data-target="#updateFieldModal" disabled="@(item.Status != "Waiting For L3 Interview")">Approve-L3</a>
+
+                                            </div>
+                                        </center>
+                                    </td>
+                                </tr>
+                                }
+                        </tbody>
+                    </table>
+                </div>
+                <br />
+                <!-- Modal -->
+                @using (Html.BeginForm("Onboarding", "Login", FormMethod.Post))
+                {
+
+                    <div class="modal fade" id="updateFieldModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Student Remarks</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"><b>Hallticket<span class="text-danger">*</span></b></label>
+                                        <div class="col-sm-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <input type="text" id="Hallticket" name="Hallticket" placeholder="Enter HallTicket Number" />
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"><b>Score<span class="text-danger">*</span></b></label>
+                                        <div class="col-sm-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                @Html.TextBox("Score")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"><b>Remarks<span class="text-danger">*</span></b></label>
+                                        <div class="col-sm-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                @* <input type="text" id="txtName" name="searchparam" placeholder="Enter Remarks" />*@
+                                                @Html.TextArea("Remarks")
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"><b>EmailID<span class="text-danger">*</span></b></label>
+                                        <div class="col-sm-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <input type="text" id="To" name="To" placeholder="Enter  Email address" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group row">
+                                <label class="col-sm-2 col-form-label"><b>Date</b></label>
+                                <div class="col-sm-6 inputGroupContainer">
+                                <div class="input-group">
+                                <input type="date" id="date" name="searchparam" />
+                                </div>
+                                </div>
+                                </div>*@
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-primary float-end" value="Submit">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </section>
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#fieldSetupGrid").on("click", ".editbtn", function () {
+                var currentid = $(this).closest("tr").find("td").eq(0).text();
+                var toemail = $(this).closest("tr").find("td").eq(2).text();
+                $("input:text#Hallticket").val(currentid);
+                $("input:text#To").val(toemail);
+            });
+        });
+    </script>
+
+</body>
+</html>
+
